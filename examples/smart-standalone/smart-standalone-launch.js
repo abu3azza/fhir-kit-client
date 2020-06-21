@@ -3,10 +3,10 @@
 const express = require('express');
 const session = require('express-session');
 const simpleOauthModule = require('simple-oauth2');
-const Client = require('../../lib/client');
+const Client = require('./lib/client');
 
-const CLIENT_ID = '<CLIENT_ID>';
-const CLIENT_SECRET = '<CLIENT_SECRET>';
+const CLIENT_ID = 'fb6ed76c-f081-4f66-a634-fe6f9cb4fe36';
+const CLIENT_SECRET = 'J0oB1vic14UngSCnG56eTkUof486DrGI';
 
 const app = express();
 
@@ -42,6 +42,8 @@ app.use(session({
  * ISS).
  */
 app.get('/launch', async (req, res) => {
+  console.log("launch");
+
   const { iss, scope } = req.query;
   const fhirClient = new Client({ baseUrl: iss });
   const { authorizeUrl, tokenUrl } = await fhirClient.smartAuthMetadata();
@@ -64,20 +66,22 @@ app.get('/launch', async (req, res) => {
       authorizationMethod: 'body',
     },
   });
+  console.log("Auth MOdule Created");
 
   // Authorization uri definition
   const authorizationUri = oauth2.authorizationCode.authorizeURL({
-    redirect_uri: 'http://localhost:3000/callback',
+    redirect_uri: 'https://abu3azza.github.io/smart-on-fhir-tutorial/example-smart-app/',
     aud: iss,
     scope,
     state: '3(#0/!~',
   });
-
+ console.log("Got Auth URL "+ authorizationUri);
   res.redirect(authorizationUri);
 });
 
 // Callback service parsing the authorization token and asking for the access token
 app.get('/callback', async (req, res) => {
+  console.log("Callback");
   const { iss } = req.session;
   console.log(req.session);
 
