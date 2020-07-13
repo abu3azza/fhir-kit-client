@@ -265,7 +265,22 @@ class Client {
    * @return {Promise<Object>} FHIR resource
    */
   read({ resourceType, id, headers, options = {} } = {}) {
-    return this.httpClient.get(`${resourceType}/${id}`, deprecateHeaders(options, headers));
+    console.log("calling for patient retreival => "+`?patientId=${id}` +deprecateHeaders(options, headers));
+    let response = this.httpClient.get(`${resourceType}?patientId=${id}`, deprecateHeaders(options, headers));
+    response.then( (data)=>
+      console.log("Data Returned====> ",data)
+    );
+    console.log("Got Client Response ==> "+response);
+    return response;
+  }
+  readMellenium({ resourceType, id, headers, options = {} } = {}) {
+    console.log("calling for patient retreival => "+`${resourceType}/${id}` +deprecateHeaders(options, headers));
+    let response = this.httpClient.get(`${resourceType}/${id}?patientId=${id}`, deprecateHeaders(options, headers));
+    response.then( (data)=>
+      console.log("Data Returned====> ",data)
+    );
+    console.log("Got Client Response ==> "+response);
+    return response;
   }
 
   /**

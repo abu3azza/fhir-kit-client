@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node smart-standalone-launch.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,8 @@
     "es6": "0.0.7",
     "es6-promise": "^4.2.8",
     "flatted": "^3.0.2",
+    "nodemon": "^2.0.4",
+    "nvm": "0.0.4",
     "query-string": "^6.13.1",
     "universal-url": "^2.0.0"
   }
